@@ -13,6 +13,9 @@ app.get(files.map((part) => part.replace(app.folder, '')), (req, res) => {
 app.get('/', (req, res) => {
 	app.sendFile('/index.html')
 })
+app.get('404', (req, res) => {
+	app.redirect('/')
+})
 app.post('/pong',  (req, res) => {
 	app.collect((json)=> {
 		let {value} = JSON.parse(json);
@@ -21,7 +24,7 @@ app.post('/pong',  (req, res) => {
 
 		try{
 			let real = new URL(value.trim())
-			url = `${real.protocol}//${real.hostname}`
+			url = `${real.protocol}//${real.hostname}`.split('&')[0]
 		}
 		catch(e){
 			if(!value.includes('http')){
