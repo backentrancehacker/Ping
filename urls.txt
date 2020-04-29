@@ -1,1 +1,1 @@
-geolocation.adcharity.repl.co, pingbreaker.ethanhorowitz.repl.co
+geolocation.adcharity.repl.co

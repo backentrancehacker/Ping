@@ -20,7 +20,8 @@ app.post('/pong',  (req, res) => {
 		let url;
 
 		try{
-			url = new URL(value).hostname.toString().trim()
+			let real = new URL(value.trim())
+			url = `${real.protocol}//${real.hostname}`
 		}
 		catch(e){
 			if(!value.includes('http')){
@@ -33,7 +34,6 @@ app.post('/pong',  (req, res) => {
 					error: 'Invalid Url'
 				}))
 			}
-			
 			return;
 		}
 		let data =  ping();
@@ -44,8 +44,7 @@ app.post('/pong',  (req, res) => {
 			}))
 			return;
 		}
-		let toFetch = url.includes('http') ? url : `https://${url}`;
-		fetch(toFetch, {method: 'GET'})
+		fetch(url, {method: 'GET'})
 		.then(() => {
 			data += `, ${url}`
 			pong(data)
@@ -59,8 +58,6 @@ app.post('/pong',  (req, res) => {
 				error: 'Invalid Url'
 			}))
 		})
-		
-		
 	})
 })
 app.start(8080)
