@@ -8,10 +8,21 @@ function pong(txt){
 }
 function cycle(){
 	let data = ping();
-	data = data.split(',').map(piece => piece.trim()).filter(piece => piece.length > 2 && piece.includes('http'))
+	data = data.split(',')
+	.map(piece => {
+		let subPiece = piece.trim();
+		return subPiece.includes('http') ? subPiece : `https://${subPiece}`;
+		
+	})
+	.filter(piece => piece.length > 5)
+
 	for(let piece of data){
-		fetch(piece)
+		fetch(piece, {method: 'GET'})
+		.catch(() => {
+			console.log('Invalid Link', piece)
+		})
 	}
+
 }
 module.exports = {
 	ping,

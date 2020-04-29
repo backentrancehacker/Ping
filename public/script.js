@@ -1,5 +1,7 @@
 document.querySelector('input').addEventListener('keyup', (e) => {
-    if (event.key === "Enter") {
+    if (e.key === "Enter") {
+		if(e.target.value == '') return;
+		
 		let xhr = new XMLHttpRequest();
 		xhr.open('POST', '/pong');
 		xhr.setRequestHeader('Content-Type', 'application/json');
@@ -11,7 +13,7 @@ document.querySelector('input').addEventListener('keyup', (e) => {
 				}
 				else{
 					createNotification(`<i class="fas fa-check-circle"></i> ${response.success}`, 'good')
-
+					e.target.value = ''
 				}
 			}
 		}
